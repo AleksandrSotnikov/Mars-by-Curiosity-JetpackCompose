@@ -1,5 +1,7 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode.FAIL_ON_PROJECT_REPOS
+
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositoriesMode.set(FAIL_ON_PROJECT_REPOS)
 
     repositories {
         google()
@@ -27,4 +29,7 @@ include(
 )
 
 // Features
-include()
+include(
+    ":feature:marsbycuriosity_api",
+    ":feature:marsbycuriosity_impl"
+)

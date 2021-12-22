@@ -7,11 +7,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ru.sotnikov.core.ui.theme.RickAndMortyTheme
+import ru.sotnikov.core.ui.theme.MarsByCuriosityTheme
 
 @Composable
 fun MainContainer() {
-    RickAndMortyTheme {
+    MarsByCuriosityTheme {
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -30,7 +30,7 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    RickAndMortyTheme {
+    MarsByCuriosityTheme {
         Greeting("Android")
     }
 }

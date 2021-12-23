@@ -52,6 +52,8 @@ android {
 dependencies {
     implementation(project(ModuleDependency.Core.ui))
     implementation(project(ModuleDependency.UI.home))
+    implementation(project(ModuleDependency.Feature.marsByCuriosity_api))
+    implementation(project(ModuleDependency.Feature.marsByCuriosity_impl))
 
     implementation(Dependency.AndroidX.core)
     implementation(Dependency.AndroidX.appcompat)
@@ -61,6 +63,11 @@ dependencies {
     implementation(Dependency.AndroidX.Compose.ui)
     implementation(Dependency.AndroidX.Compose.tooling)
     implementation(Dependency.AndroidX.Compose.material)
+
+    implementation(Dependency.Loggers.prettyLogger)
+    implementation(Dependency.Loggers.timber)
+
+    implementation(Dependency.Koin.android)
 
     implementation(Dependency.Loggers.prettyLogger)
     implementation(Dependency.Loggers.timber)

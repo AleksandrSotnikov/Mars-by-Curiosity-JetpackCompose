@@ -14,12 +14,14 @@ android {
         versionName = AndroidConfig.versionName
 
         vectorDrawables {
+            @Incubating
             useSupportLibrary = AndroidConfig.useSupportLibrary
         }
     }
 
     buildTypes {
         release {
+            @Incubating
             isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
             proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
         }
@@ -35,18 +37,24 @@ android {
     }
 
     buildFeatures {
+        @Incubating
         compose = true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Version.compose
+        @Incubating
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
 
     packagingOptions {
         resources {
+            @Incubating
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            @Incubating
+            excludes += "kotlin/internal/internal.kotlin_builtins"
         }
     }
+    namespace = "ru.sotnikov.marsbycuriosity"
 }
 
 dependencies {

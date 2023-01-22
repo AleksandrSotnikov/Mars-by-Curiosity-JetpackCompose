@@ -14,19 +14,16 @@ import ru.sotnikov.core.ui.theme.MarsByCuriosityTheme
 @ExperimentalAnimationApi
 @Composable
 fun MainContainer() {
-    val navController = rememberAnimatedNavController()
-    ProvideWindowInsets {
-        MarsByCuriosityTheme {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colors.background
-            ) {
+    //val navController = rememberAnimatedNavController()
+    MarsByCuriosityTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
 
-            }
         }
     }
 }
-
 
 
 @ExperimentalAnimationApi

@@ -8,4 +8,7 @@ repositories {
     gradlePluginPortal()
     jcenter()
     mavenCentral()
+    maven {
+        url = uri("https://plugins.gradle.org/m2/")
+    }
 }

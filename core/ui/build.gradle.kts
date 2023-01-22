@@ -25,8 +25,9 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Version.compose
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
+    namespace = "ru.sotnikov.core.ui"
 }
 
 dependencies {

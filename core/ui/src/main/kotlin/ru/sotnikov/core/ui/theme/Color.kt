@@ -1,3 +1,4 @@
+@file:Suppress("detekt.MagicNumber")
 package ru.sotnikov.core.ui.theme
 
 import androidx.compose.ui.graphics.Color

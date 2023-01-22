@@ -21,8 +21,9 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Version.compose
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
+    namespace = "ru.sotnikov.feature.marsbycuriosity_api"
 }
 dependencies {
 

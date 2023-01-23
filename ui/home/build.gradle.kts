@@ -36,5 +36,6 @@ dependencies {
     implementation(Dependency.Other.insetter)
     implementation(Dependency.Navigation.compose)
     implementation(project(ModuleDependency.navigation))
+    implementation(project(ModuleDependency.UI.settings))
     implementation(Dependency.Accompanist.navigationAnimation)
 }

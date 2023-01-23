@@ -7,6 +7,7 @@ object ModuleDependency {
         private const val directory = ":ui"
 
         const val home = "$directory:home"
+        const val settings = "$directory:settings"
     }
 
     object Feature {

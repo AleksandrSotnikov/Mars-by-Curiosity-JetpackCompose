@@ -62,6 +62,7 @@ dependencies {
     implementation(project(ModuleDependency.UI.home))
     implementation(project(ModuleDependency.Feature.marsByCuriosity_api))
     implementation(project(ModuleDependency.Feature.marsByCuriosity_impl))
+    implementation(project(ModuleDependency.UI.settings))
 
     implementation(Dependency.AndroidX.core)
     implementation(Dependency.AndroidX.appcompat)
@@ -79,4 +80,5 @@ dependencies {
 
     implementation(Dependency.Loggers.prettyLogger)
     implementation(Dependency.Loggers.timber)
+    implementation("androidx.core:core-ktx:+")
 }

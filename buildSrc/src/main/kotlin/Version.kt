@@ -13,7 +13,7 @@ object Version {
 
     // Static analysis tools
     const val spotless = "6.13.0"
-    const val ktlintJLLeitschuh = "11.0.0"
+    const val ktlintJLLeitschuh = "10.3.0"
     const val ktlint = "0.48.1"
     const val detekt = "1.22.0"
 }

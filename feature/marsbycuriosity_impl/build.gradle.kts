@@ -6,6 +6,7 @@ plugins {
 
 android {
     compileSdk = AndroidConfig.compileSdk
+    namespace = "ru.sotnikov.marsbycuriosity_impl"
 
     defaultConfig {
         minSdk = AndroidConfig.minSdk
@@ -22,10 +23,8 @@ android {
     }
 
     composeOptions {
-        @Incubating
-        kotlinCompilerExtensionVersion = "1.4.0"
+        kotlinCompilerExtensionVersion = Version.compose
     }
-    namespace = "ru.sotnikov.feature.marsbycuriosity_impl"
 }
 dependencies {
     implementation(project(ModuleDependency.Feature.marsByCuriosity_api))
@@ -37,4 +36,6 @@ dependencies {
     implementation(Dependency.Other.kotlinSerializeConverter)
     implementation(Dependency.Other.kotlinSerialization)
     implementation(Dependency.Squareup.retrofit)
+    implementation(Dependency.AndroidX.paging)
+    implementation(Dependency.Loggers.prettyLogger)
 }

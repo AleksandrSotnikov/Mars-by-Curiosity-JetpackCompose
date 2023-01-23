@@ -13,6 +13,7 @@ object ModuleDependency {
     object Feature {
         private const val directory = ":feature"
 
+
         const val marsByCuriosity_api = "$directory:marsbycuriosity_api"
         const val marsByCuriosity_impl = "$directory:marsbycuriosity_impl"
     }

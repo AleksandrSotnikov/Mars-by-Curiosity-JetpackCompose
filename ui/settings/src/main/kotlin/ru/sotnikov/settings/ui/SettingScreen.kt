@@ -21,8 +21,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
+import androidx.compose.material.TabRowDefaults.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -49,9 +53,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import org.koin.androidx.compose.viewModel
+import java.util.Date
 
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "SimpleDateFormat")
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter", "SimpleDateFormat", "StateFlowValueCalledInComposition")
 @Composable
 fun SettingScreen(
     navController: NavController,
@@ -59,15 +64,21 @@ fun SettingScreen(
     val viewModel: SettingViewModel by viewModel()
     var expandedDropDownMenu by remember { mutableStateOf(false) }
     var expandedCalendar by remember { mutableStateOf(false) }
-    val selected by remember { mutableStateOf("No cameras found") }
-    var date by remember { mutableStateOf(SimpleDateFormat("dd MMM, yyyy", Locale.US).format(Calendar.getInstance().time)) }
-    var listCameras = viewModel.updateCamerasList(apiKey = stringResource(id = ru.sotnikov.core.ui.R.string.NasaOpenApis), date = SimpleDateFormat(	"YYYY-MM-DD").format(date))
+    var selected by remember { mutableStateOf("No cameras found") }
+    var date by remember {
+        mutableStateOf(
+            SimpleDateFormat(
+                "dd MMM, yyyy",
+                Locale.US
+            ).format(Calendar.getInstance().time)
+        )
+    }
+    viewModel.updateCamerasList(
+        apiKey = stringResource(id = ru.sotnikov.core.ui.R.string.NasaOpenApis),
+        date = SimpleDateFormat("yyyy-MM-dd").format(SimpleDateFormat("dd MMM, yyyy", Locale.US).parse(date) as Date)
+    )
+    val a = viewModel.container.stateFlow.value.cameraList.distinctBy { it.fullName }
     Scaffold(modifier = Modifier.background(color = MarsByCuriosityTheme.colors.background)) {
-        LazyColumn(){
-            items(viewModel.container.stateFlow.value.cameraList) { it->
-                Text(it.fullName)
-            }
-        }
         Text(
             text = "Select Camera and Date", textAlign = TextAlign.Center, modifier = Modifier
                 .fillMaxWidth()
@@ -102,25 +113,57 @@ fun SettingScreen(
                 fontSize = 14.sp
             )
             Spacer(modifier = Modifier.padding(bottom = 8.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(60.dp)
-                    .background(color = Color(0x80FFFFFF), shape = RoundedCornerShape(10.dp))
-            ) {
-                Text(
-                    text = selected,
-                    modifier = Modifier.padding(start = 16.dp),
-                    fontFamily = familyDosis,
-                    fontSize = 18.sp
-                )
-                Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.dropdown),
-                    contentDescription = null,
-                    modifier = Modifier.padding(end = 16.dp)
-                )
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.Transparent)) {
+                DropdownMenu(
+                    expanded = expandedDropDownMenu,
+                    onDismissRequest = { expandedDropDownMenu = false },
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f)
+                        .background(color = Color(0xFFDCCEBE))
+                ) {
+                    viewModel.container.stateFlow.value.cameraList.distinctBy { it.fullName }.forEach {
+                        DropdownMenuItem(onClick = {
+                            selected = it.fullName
+                            expandedDropDownMenu = false
+                            if (viewModel.container.stateFlow.value.cameraList.isEmpty()) selected = "No cameras found"
+                        }, modifier = Modifier
+                            .fillMaxWidth()
+                            .background(color = Color.Transparent)) {
+                            Text(
+                                text = it.fullName,
+                                fontFamily = familyDosis,
+                                maxLines = 1,
+                                fontSize = 18.sp,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                }
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                        .background(color = Color(0x80FFFFFF), shape = RoundedCornerShape(10.dp))
+                ) {
+                    Text(
+                        text = selected,
+                        modifier = Modifier.padding(start = 16.dp),
+                        fontFamily = familyDosis,
+                        fontSize = 18.sp
+                    )
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.dropdown),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .clickable { expandedDropDownMenu = true }
+                            .rotate(if (expandedDropDownMenu) 180f else 0f)
+                    )
+                }
             }
             Spacer(modifier = Modifier.padding(bottom = 16.dp))
             Text(
@@ -180,11 +223,13 @@ fun SettingScreen(
                     .fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                AndroidView(factory = { CalendarView(it) },
+                AndroidView(
+                    factory = { CalendarView(it) },
                     update = {
                         it.setOnDateChangeListener { calendarView, year, _, day ->
                             date = "$day ${SimpleDateFormat("MMM", Locale.US).format(calendarView.date)}, $year"
                             expandedCalendar = false
+                            if (viewModel.container.stateFlow.value.cameraList.isEmpty()) selected = "No cameras found"
                         }
                     },
                     modifier = Modifier.background(color = Color(0xFFDCCEBE))

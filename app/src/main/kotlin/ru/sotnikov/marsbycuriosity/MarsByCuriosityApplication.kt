@@ -23,7 +23,7 @@ class MarsByCuriosityApplication : Application() {
         })
 
         startKoin {
-            androidLogger()
+            //androidLogger()
             androidContext(this@MarsByCuriosityApplication)
             modules(
                 listOf(

@@ -25,8 +25,9 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Version.compose
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
+    namespace = "ru.sotnikov.home"
 }
 
 dependencies {
@@ -35,5 +36,6 @@ dependencies {
     implementation(Dependency.Other.insetter)
     implementation(Dependency.Navigation.compose)
     implementation(project(ModuleDependency.navigation))
+    implementation(project(ModuleDependency.UI.settings))
     implementation(Dependency.Accompanist.navigationAnimation)
 }

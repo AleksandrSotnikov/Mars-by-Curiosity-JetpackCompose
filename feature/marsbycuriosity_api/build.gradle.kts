@@ -5,6 +5,7 @@ plugins {
 
 android {
     compileSdk = AndroidConfig.compileSdk
+    namespace = "ru.sotnikov.marsbycuriosity_api"
 
     defaultConfig {
         minSdk = AndroidConfig.minSdk
@@ -25,5 +26,6 @@ android {
     }
 }
 dependencies {
-
+    implementation(Dependency.Loggers.timber)
+    implementation(Dependency.AndroidX.paging)
 }

@@ -7,10 +7,12 @@ object ModuleDependency {
         private const val directory = ":ui"
 
         const val home = "$directory:home"
+        const val settings = "$directory:settings"
     }
 
     object Feature {
         private const val directory = ":feature"
+
 
         const val marsByCuriosity_api = "$directory:marsbycuriosity_api"
         const val marsByCuriosity_impl = "$directory:marsbycuriosity_impl"

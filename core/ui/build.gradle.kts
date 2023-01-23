@@ -25,8 +25,9 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Version.compose
+        kotlinCompilerExtensionVersion = "1.4.0"
     }
+    namespace = "ru.sotnikov.core.ui"
 }
 
 dependencies {
@@ -37,4 +38,5 @@ dependencies {
     api(Dependency.AndroidX.Compose.runtime)
     api(Dependency.AndroidX.Compose.foundation)
     api(Dependency.AndroidX.Compose.material)
+    implementation("androidx.core:core-ktx:+")
 }

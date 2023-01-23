@@ -1,12 +1,28 @@
 import org.gradle.api.initialization.resolve.RepositoriesMode.FAIL_ON_PROJECT_REPOS
 
+include(":feature:marsbycuriosity_impl")
+
+
+include(":feature:marsbycuriosity_api")
+
+
+include(":ui:settings")
+
+
+include(":navigation")
+
+
 dependencyResolutionManagement {
     repositoriesMode.set(FAIL_ON_PROJECT_REPOS)
 
     repositories {
         google()
+        gradlePluginPortal()
+        jcenter()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
     }
 }
 
@@ -25,7 +41,8 @@ include(":navigation")
 
 // UI
 include(
-    ":ui:home"
+    ":ui:home",
+    ":ui:settings"
 )
 
 // Features

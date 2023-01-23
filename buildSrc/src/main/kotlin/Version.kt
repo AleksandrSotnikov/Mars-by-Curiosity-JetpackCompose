@@ -1,19 +1,19 @@
 object Version {
     // Kotlin
-    const val kotlin = "1.5.31"
+    const val kotlin = "1.8.0"
 
     // Android
-    const val compose = "1.1.0-beta02"
+    const val compose = "1.4.0-alpha04"
 
     // Gradle
-    const val androidGradle = "7.0.3"
+    const val androidGradle = "8.1.0-alpha01"
 
     // Versions
-    const val gradleVersions = "0.39.0"
+    const val gradleVersions = "0.44.0"
 
     // Static analysis tools
-    const val spotless = "5.17.1"
-    const val ktlintJLLeitschuh = "10.2.0"
-    const val ktlint = "0.42.1"
-    const val detekt = "1.18.1"
+    const val spotless = "6.13.0"
+    const val ktlintJLLeitschuh = "10.3.0"
+    const val ktlint = "0.48.1"
+    const val detekt = "1.22.0"
 }

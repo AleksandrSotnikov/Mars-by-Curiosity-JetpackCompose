@@ -8,6 +8,9 @@ object ModuleDependency {
 
         const val home = "$directory:home"
         const val settings = "$directory:settings"
+        const val selecter = "$directory:selecter"
+        const val selecterDetail = "$directory:selecterdetail"
+
     }
 
     object Feature {

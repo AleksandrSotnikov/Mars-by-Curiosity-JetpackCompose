@@ -63,6 +63,7 @@ dependencies {
     implementation(project(ModuleDependency.Feature.marsByCuriosity_api))
     implementation(project(ModuleDependency.Feature.marsByCuriosity_impl))
     implementation(project(ModuleDependency.UI.settings))
+    implementation(project(ModuleDependency.UI.selecter))
 
     implementation(Dependency.AndroidX.core)
     implementation(Dependency.AndroidX.appcompat)

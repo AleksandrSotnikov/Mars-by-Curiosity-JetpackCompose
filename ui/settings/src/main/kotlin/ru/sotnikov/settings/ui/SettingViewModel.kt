@@ -13,10 +13,25 @@ internal class SettingViewModel(
     private val getCameraNameUseCase: GetCameraNameUseCase
 ) : ViewModel(), ContainerHost<SettingState, SettingSideEffect> {
     override val container = container<SettingState, SettingSideEffect>(SettingState())
-    fun updateCamerasList(apiKey:String, date:String) = intent {
-        val cameras = getCameraNameUseCase(apiKey,date)
-        reduce{
+    fun updateCamerasList(apiKey: String, date: String) = intent {
+        val cameras = getCameraNameUseCase(apiKey, date)
+        reduce {
             state.copy(cameraList = cameras.map { it.camera })
         }
+
     }
+
+    fun updateDate(date: String) = intent {
+        reduce {
+            state.copy(date = date)
+        }
+    }
+
+    fun updateCamera(camera: String) = intent {
+        reduce {
+            state.copy(camera = camera)
+        }
+    }
+
+
 }

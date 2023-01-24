@@ -4,9 +4,9 @@ import android.app.Application
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
 import ru.sotnikov.marsbycuriosity_impl.marsByCuriosityModule
+import ru.sotnikov.selecter.selecterModule
 import ru.sotnikov.settings.settingModule
 import timber.log.Timber
 
@@ -28,7 +28,8 @@ class MarsByCuriosityApplication : Application() {
             modules(
                 listOf(
                     marsByCuriosityModule,
-                    settingModule
+                    settingModule,
+                    selecterModule
                 )
             )
         }

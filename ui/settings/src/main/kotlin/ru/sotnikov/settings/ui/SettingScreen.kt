@@ -1,6 +1,7 @@
 package ru.sotnikov.settings.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.CalendarView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,8 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -25,9 +24,9 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.material.TabRowDefaults.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,14 +45,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import org.koin.androidx.compose.viewModel
 import ru.sotnikov.core.ui.theme.MarsByCuriosityTheme
 import ru.sotnikov.core.ui.theme.familyDosis
+import ru.sotnikov.navigation.NavigationItem
 import ru.sotnikov.settings.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Locale
-import org.koin.androidx.compose.viewModel
 import java.util.Date
+import java.util.Locale
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "SimpleDateFormat", "StateFlowValueCalledInComposition")
@@ -77,7 +77,7 @@ fun SettingScreen(
         apiKey = stringResource(id = ru.sotnikov.core.ui.R.string.NasaOpenApis),
         date = SimpleDateFormat("yyyy-MM-dd").format(SimpleDateFormat("dd MMM, yyyy", Locale.US).parse(date) as Date)
     )
-    val a = viewModel.container.stateFlow.value.cameraList.distinctBy { it.fullName }
+    val state = viewModel.container.stateFlow.collectAsState().value
     Scaffold(modifier = Modifier.background(color = MarsByCuriosityTheme.colors.background)) {
         Text(
             text = "Select Camera and Date", textAlign = TextAlign.Center, modifier = Modifier
@@ -123,14 +123,17 @@ fun SettingScreen(
                         .fillMaxWidth(0.9f)
                         .background(color = Color(0xFFDCCEBE))
                 ) {
-                    viewModel.container.stateFlow.value.cameraList.distinctBy { it.fullName }.forEach {
-                        DropdownMenuItem(onClick = {
-                            selected = it.fullName
-                            expandedDropDownMenu = false
-                            if (viewModel.container.stateFlow.value.cameraList.isEmpty()) selected = "No cameras found"
-                        }, modifier = Modifier
-                            .fillMaxWidth()
-                            .background(color = Color.Transparent)) {
+                    state.cameraList.distinctBy { it.fullName }.forEach {
+                        DropdownMenuItem(
+                            onClick = {
+                                selected = it.fullName
+                                viewModel.updateCamera(selected)
+                                expandedDropDownMenu = false
+                                if (state.cameraList.isEmpty()) selected = "No cameras found"
+                            }, modifier = Modifier
+                                .fillMaxWidth()
+                                .background(color = Color.Transparent)
+                        ) {
                             Text(
                                 text = it.fullName,
                                 fontFamily = familyDosis,
@@ -198,7 +201,14 @@ fun SettingScreen(
             }
             Spacer(modifier = Modifier.padding(bottom = 40.dp))
             Button(
-                onClick = {},
+                onClick = {
+                    if (selected != "No cameras found") {
+                        Log.e("qqq", date + " " + selected + " " + state.camera + " " + state.camera)
+                        navController.navigate(
+                            NavigationItem.SelectedPhotos.route.plus("/$selected").plus("/$date")
+                        )
+                    }
+                },
                 shape = RoundedCornerShape(10.dp),
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFBF2E0E)),
                 modifier = Modifier
@@ -229,7 +239,8 @@ fun SettingScreen(
                         it.setOnDateChangeListener { calendarView, year, _, day ->
                             date = "$day ${SimpleDateFormat("MMM", Locale.US).format(calendarView.date)}, $year"
                             expandedCalendar = false
-                            if (viewModel.container.stateFlow.value.cameraList.isEmpty()) selected = "No cameras found"
+                            if (state.cameraList.isEmpty()) selected = "No cameras found"
+                            viewModel.updateDate(date)
                         }
                     },
                     modifier = Modifier.background(color = Color(0xFFDCCEBE))

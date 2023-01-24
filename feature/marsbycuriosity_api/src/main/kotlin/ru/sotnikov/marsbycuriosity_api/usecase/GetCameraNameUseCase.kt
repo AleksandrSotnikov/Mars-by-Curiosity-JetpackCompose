@@ -1,10 +1,10 @@
 package ru.sotnikov.marsbycuriosity_api.usecase
 
 import ru.sotnikov.marsbycuriosity_api.model.Photo
-import ru.sotnikov.marsbycuriosity_api.repository.PhotosRepository
+import ru.sotnikov.marsbycuriosity_api.repository.CamerasRepository
 
-class GetCameraNameUseCase(private val photosRepository: PhotosRepository) {
-    suspend operator fun invoke(apiKey:String,date:String) : List<Photo> {
-        return photosRepository.getPhotosList(apikey = apiKey,date=date)
+class GetCameraNameUseCase(private val camerasRepository: CamerasRepository) {
+    suspend operator fun invoke(apiKey: String, date: String): List<Photo> {
+        return camerasRepository.getPhotosList(apikey = apiKey, date = date)
     }
 }

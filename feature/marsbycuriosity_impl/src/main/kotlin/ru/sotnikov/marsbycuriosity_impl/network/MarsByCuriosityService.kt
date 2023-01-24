@@ -7,7 +7,14 @@ import ru.sotnikov.marsbycuriosity_impl.model.Photos
 interface MarsByCuriosityService {
     @GET("photos")
     suspend fun getCamerasList(
-        @Query("api_key") apiKey : String,
-        @Query("earth_date") date : String
-    ) : Photos
+        @Query("api_key") apiKey: String,
+        @Query("earth_date") date: String
+    ): Photos
+
+    @GET("photos")
+    suspend fun getPhotosList(
+        @Query("api_key") apiKey: String,
+        @Query("earth_date") date: String,
+        @Query("camera") camera: String
+    ): Photos
 }

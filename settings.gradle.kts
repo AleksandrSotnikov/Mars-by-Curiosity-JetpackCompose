@@ -1,5 +1,11 @@
 import org.gradle.api.initialization.resolve.RepositoriesMode.FAIL_ON_PROJECT_REPOS
 
+include(":ui:selecterdetail")
+
+
+include(":ui:selecter")
+
+
 include(":feature:marsbycuriosity_impl")
 
 
@@ -42,7 +48,10 @@ include(":navigation")
 // UI
 include(
     ":ui:home",
-    ":ui:settings"
+    ":ui:settings",
+    ":ui:selecter",
+    ":ui:selecterdetail"
+
 )
 
 // Features

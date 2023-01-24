@@ -11,6 +11,8 @@ import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import ru.sotnikov.navigation.NavigationItem
+import ru.sotnikov.selecter.ui.SelecterScreen
+import ru.sotnikov.selecterdetail.ui.SelecterDetailScreen
 import ru.sotnikov.settings.ui.SettingScreen
 
 
@@ -26,13 +28,25 @@ internal fun Navigation(navController: NavHostController) {
         composable(NavigationItem.SelectedCameraAndDate.route) {
             SettingScreen(navController = navController)
         }
-        composable(NavigationItem.SelectedPhotos.route) {
-
-        }
-        composable(NavigationItem.CheckPhoto.route.plus("/{id}"),
-            arguments = listOf(navArgument("id") { type = NavType.StringType })
+        composable(
+            NavigationItem.SelectedPhotos.route.plus("/{camera}").plus("/{date}"),
+            arguments = listOf(navArgument("date") { type = NavType.StringType },
+                navArgument("camera") { type = NavType.StringType })
         ) {
-
+            SelecterScreen(
+                navController = navController,
+                it.arguments?.getString("date").plus(""),
+                it.arguments?.getString("camera").plus("")
+            )
+        }
+        composable(
+            NavigationItem.CheckPhoto.route.plus("/{id}").plus("/{imgSrc}"),
+            arguments = listOf(navArgument("id") { type = NavType.StringType },
+                navArgument("imgSrc") { type = NavType.StringType })
+        ) {
+            SelecterDetailScreen(navController,
+                it.arguments?.getString("id").plus(""),
+                it.arguments?.getString("imgSrc").plus(""))
         }
     }
 }

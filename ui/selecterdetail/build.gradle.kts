@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+    namespace = "ru.sotnikov.selecter"
     compileSdk = AndroidConfig.compileSdk
 
     defaultConfig {
@@ -11,12 +12,12 @@ android {
         targetSdk = AndroidConfig.targetSdk
     }
 
-    buildFeatures {
-        compose = true
-    }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+
+    buildFeatures {
+        compose = true
     }
 
     compileOptions {
@@ -27,17 +28,16 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.0"
     }
-    namespace = "ru.sotnikov.home"
 }
 
 dependencies {
     implementation(project(ModuleDependency.Core.ui))
-    implementation(Dependency.Accompanist.insets)
-    implementation(Dependency.Other.insetter)
-    implementation(Dependency.Navigation.compose)
     implementation(project(ModuleDependency.navigation))
-    implementation(project(ModuleDependency.UI.settings))
-    implementation(project(ModuleDependency.UI.selecter))
-    implementation(project(ModuleDependency.UI.selecterDetail))
-    implementation(Dependency.Accompanist.navigationAnimation)
+    implementation(Dependency.AndroidX.paging)
+    implementation(Dependency.Accompanist.flowlayout)
+    implementation(Dependency.Other.toolbar)
+    implementation(Dependency.Loggers.prettyLogger)
+    implementation(Dependency.Accompanist.insets)
+    implementation(Dependency.Navigation.compose)
+    implementation(Dependency.Other.coil)
 }
